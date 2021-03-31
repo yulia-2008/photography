@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import {Text} from "react-native";
 
-class Photos extends Component {
-    render() {
-        return (
-            
-                <Text> Single Photo</Text>
-            
+export default function Photos({navigation}) {
+        return (           
+            <Text> {navigation.getParam('name')}</Text>            
         );
-    }
 }
 
-export default Photos;
+
+
