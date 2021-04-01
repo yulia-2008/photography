@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from "react-native";
-import Landscape from './photoLibrary/Landscape.JPG'
+// import Landscape from './photoLibrary/Landscape.JPG'
 
 export default function Categories({navigation}) {
+    
 
     const [categories, updateCategories] = useState([
         {name: "Landscape", picture: "picture", key: 1},
-        {name: "Street photo", picture: "picture", key:2},
+        {name: "Street Photo", picture: "picture", key:2},
         {name: "Portrait", picture: "picture", key: 3},
         {name: "Architecture", picture: "picture", key: 4},
         {name: "Black & White", picture: "picture", key: 5},
@@ -22,7 +23,7 @@ export default function Categories({navigation}) {
                     numColumns={2}
                     renderItem={ ({item}) =>
                         <TouchableOpacity   style={styles.category}
-                                            onPress={() => navigation.navigate("Photos", item)} >
+                                            onPress={() => navigation.navigate(item.name, item)} >
                             <Text>{item.name}</Text>
                         </TouchableOpacity>   
                     }         

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Text} from "react-native";
 
 export default function Photos({navigation}) {
-        return (           
+        return (                      
             <Text> {navigation.getParam('name')}</Text>            
         );
 }
