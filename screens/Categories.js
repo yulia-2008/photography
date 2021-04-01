@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, TouchableOpacity, StyleSheet} from "react-native";
-// import Landscape from './photoLibrary/Landscape.JPG'
+import {View, Text, Image, FlatList, TouchableOpacity, StyleSheet} from "react-native";
+
 
 export default function Categories({navigation}) {
     
 
     const [categories, updateCategories] = useState([
-        {name: "Landscape", picture: "picture", key: 1},
-        {name: "Street Photo", picture: "picture", key:2},
-        {name: "Portrait", picture: "picture", key: 3},
-        {name: "Architecture", picture: "picture", key: 4},
-        {name: "Black & White", picture: "picture", key: 5},
-        {name: "Macro", picture: "picture", key: 6}, 
-        {name: "People", picture: "picture", key:7}
+        {name: "Landscape", picture: "Landscape", key: 1},
+        {name: "Street Photo", picture: "Landscape", key:2},
+        {name: "Portrait", picture: "Landscape", key: 3},
+        {name: "Architecture", picture: "Landscape", key: 4},
+        {name: "Black & White", picture: "Landscape", key: 5},
+        {name: "Macro", picture: "Landscape", key: 6}, 
+        {name: "People", picture: "Landscape", key:7}
     ])
     
         return (
@@ -25,9 +25,12 @@ export default function Categories({navigation}) {
                         <TouchableOpacity   style={styles.category}
                                             onPress={() => navigation.navigate(item.name, item)} >
                             <Text>{item.name}</Text>
+                            <Image source={require('./1.jpg')} style={styles.image}/> 
                         </TouchableOpacity>   
                     }         
                 />
+
+ 
             </View>
         );
 }
@@ -46,5 +49,9 @@ const styles = StyleSheet.create({
         width: 150,                                
         margin: 10, 
         height: 100                                                         
-    }   
+    },
+    image: {
+        width: 150,                                      
+        height: 100
+    }
   });
