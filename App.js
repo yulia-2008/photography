@@ -4,7 +4,8 @@ import React from 'react';
 import Navigator from './routes/DrawerNavigator.js';
 
 export default function App() {
-  return (<Navigator/>   
+  return (
+    <Navigator/> 
   );
 }
 

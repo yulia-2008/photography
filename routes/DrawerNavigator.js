@@ -5,12 +5,13 @@ import {createAppContainer} from 'react-navigation';
 
 
 const RootDrawerNavigator = createDrawerNavigator({
-    StackNavigator: {
-        screen: StackNavigator   
-    },
-    AboutStack: {
+    
+    About: {
         screen: AboutStack
-    }
+    },
+    Categories: {
+        screen: StackNavigator  
+    }   
 })
 
 export default createAppContainer(RootDrawerNavigator)
