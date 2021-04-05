@@ -6,13 +6,13 @@ export default function Categories({navigation}) {
     
 
     const [categories, updateCategories] = useState([
-        {name: "Landscape", picture: "Landscape", key: 1},
-        {name: "Street Photo", picture: "Landscape", key:2},
-        {name: "Portrait", picture: "Landscape", key: 3},
-        {name: "Architecture", picture: "Landscape", key: 4},
-        {name: "Black & White", picture: "Landscape", key: 5},
-        {name: "Macro", picture: "Landscape", key: 6}, 
-        {name: "People", picture: "Landscape", key:7}
+        {name: "Landscape",  key: 1},
+        {name: "Street Photo", key:2},
+        {name: "Portrait",  key: 3},
+        {name: "Architecture",  key: 4},
+        {name: "Black & White",  key: 5},
+        {name: "Macro",  key: 6}, 
+        {name: "People",  key:7}
     ])
     
         return (

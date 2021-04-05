@@ -1,11 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, View } from 'react-native';
-import Navigator from './routes/Stack.js'
+//import Navigator from './routes/Stack.js'; (if only stack navigator)
+import Navigator from './routes/DrawerNavigator.js';
 
 export default function App() {
-  return (<Navigator/>
-    
+  return (<Navigator/>   
   );
 }
 

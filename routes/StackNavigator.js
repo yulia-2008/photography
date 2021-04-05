@@ -32,7 +32,13 @@ const screens = {
 
 }
 
-const Stack = createStackNavigator(screens);
+const StackNavigator = createStackNavigator(screens, {
+    defaultNavigationOptions:{
+        // header text color
+        headerTintColor: "Black",
+        headerStyle:{backgroundColor: "light grey", height: 60}
+    }
+});
 
 
-export default createAppContainer(Stack);
+export default createAppContainer(StackNavigator);
