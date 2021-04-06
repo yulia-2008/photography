@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
-import {View, Text, StyleSheet} from "react-native";
+import React from 'react';
+import {Text, StyleSheet} from "react-native";
 
-class About extends Component {
-    render() {
+export default function About() {
         return (
             <Text> ABOUT SECTION</Text>
         );
     }
-}
 
-export default About;
+
