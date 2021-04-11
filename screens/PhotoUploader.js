@@ -1,63 +1,59 @@
 import React, {useState, useEffect} from 'react';
 import {View, Button, Text, TextInput, TouchableOpacity, StyleSheet} from "react-native";
-import  * as ImagePicker from 'react-native-image-picker';
+// import  * as ImagePicker from 'react-native-image-picker';
 // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function PhotoUploader() {
 
     const [text, setText] = useState("about");
+    const [image, setImage] = useState(null);
 
     const changeHandler = newText => {
         setText(newText)
     }
 
-    const selectImage = () => {
-        let options = {
-            title: 'Select Image',
-        //     maxWidth: 256,
-        //     maxHeight: 256,
-          storageOptions: {
-            skipBackup: true,
-            path: 'images',
-          },
-        };
+    // const selectImage = () => {
+    //     let options = {
+    //         title: 'Select Image',
+    //         maxWidth: 256,
+    //         maxHeight: 256,
+    //       storageOptions: {
+    //         skipBackup: true,
+    //         path: 'images',
+    //       },
+    //     };
     
-        ImagePicker.showImagePicker(options, res => {
-          console.log('RES==', res);
+        // ImagePicker.showImagePicker(options, res => {
+        //   console.log('RES==', res);
     
-          if (res.didCancel) {
-            console.log('User cancelled photo picker');
-            Alert.alert('You did not select any image'); 
-          }     
-           else if (res.error) {
-            console.log('ImagePicker Error: ', response.error);
-          } 
-          else if (res.customButton) {
-            console.log('User tapped custom button: ', res.customButton);
-          } 
-          else {
-            // let source = res;
-            // this.setState({
-            //   resourcePath: source,
-            // });
-            let source = { uri: response.uri };
-        console.log({ source });
-          }
-        })
-
-        
-    };
+        //   if (res.didCancel) {
+        //     console.log('User cancelled photo picker');
+        //     Alert.alert('You did not select any image'); 
+        //   }     
+        //    else if (res.error) {
+        //     console.log('ImagePicker Error: ', response.error);
+        //   } 
+        //   else if (res.customButton) {
+    //         console.log('User tapped custom button: ', res.customButton);
+    //       } 
+    //       else {
+    //         let source = { uri: response.uri };
+    //     console.log({ source });
+    //       }
+    //     })       
+    // };
     
-  let cameraLaunch = () => {
-    let options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    console.log("Heyy")
-    ImagePicker.launchImageLibrary(options, (res) => {
-       console.log('Response = ', res);
+//   let cameraLaunch = () => {
+//     let options = {
+//       storageOptions: {
+//         skipBackup: true,
+//         path: 'images',
+//       },
+//     };
+//     console.log("Heyy")
+//     ImagePicker.launchImageLibrary(options, (res) => {
+//        console.log('Response = ', res);
 
     //   if (res.didCancel) {
     //     console.log('User cancelled image picker');
@@ -71,8 +67,24 @@ export default function PhotoUploader() {
     //     console.log('response', JSON.stringify(res));
         
     //   }
+//     });
+//   }
+
+
+const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
-  }
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
 
 
@@ -94,7 +106,8 @@ export default function PhotoUploader() {
                 multiline={true} />
 
             <TouchableOpacity style={styles.button}> 
-                <Button title="Pick an image" onPress={selectImage} />
+                <Button title="Pick an image" onPress={pickImage} />
+                {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
             </TouchableOpacity>
 
             <View style={styles.button}  >
