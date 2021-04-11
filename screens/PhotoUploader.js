@@ -14,26 +14,23 @@ export default function PhotoUploader() {
         setText(newText)
     }
 
-const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-    //   aspect: [4, 3], if allowsEditing: frue
-      quality: 1,
-      // Specify the quality of compression,
-      // from 0 to 1. 0 means compress for small size,
-      // 1 means compress for maximum quality.
-    });
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: false,
+                //  aspect: [4, 3], if allowsEditing: frue (croping image)
+            quality: 1,
+                // Specify the quality of compression,
+                // from 0 to 1. 0 means compress for small size,
+                // 1 means compress for maximum quality.
+            });
 
-    console.log(result);
+        if (!result.cancelled) {
+        setImage(result.uri);
+        }
+    };
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
-
-
-
+    
     return (
         <>
         <StatusBar barStyle="light-content" />
@@ -45,7 +42,12 @@ const pickImage = async () => {
             { image ? 
                 <View >
                     <Image source={{ uri: image }} style={styles.image} />
-                    <AntDesign name="closesquareo" size={24} color="red" />
+                    <View style={styles.closeIcon}>
+                        <AntDesign  name="closesquareo"
+                                    size={24}
+                                    color="red"
+                                    onPress={()=> setImage(null)} />
+                    </View>
                 </View>
                 : null
             }
@@ -103,6 +105,10 @@ const styles = StyleSheet.create({
     image: {
         width: 200,
         height: 200 
+    },
+    closeIcon: {
+        alignSelf: "center",
+        marginBottom: 20,    
     }
     
 })
