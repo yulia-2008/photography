@@ -13,7 +13,7 @@ export default function PhotoUploader() {
 
     const selectImage = () => {
         let options = {
-            // title: 'Select Image',
+            title: 'Select Image',
         //     maxWidth: 256,
         //     maxHeight: 256,
           storageOptions: {
