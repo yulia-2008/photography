@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, Button, Image, Text, TextInput, StatusBar, TouchableOpacity, StyleSheet, Keyboard, TouchableWithoutFeedback} from "react-native";
+import {View, Button, Image, Text, TextInput,
+        StatusBar, TouchableOpacity, StyleSheet,
+        Keyboard, TouchableWithoutFeedback} from "react-native"; 
+import { AntDesign } from '@expo/vector-icons'; 
 import * as ImagePicker from 'expo-image-picker';
 
 export default function PhotoUploader() {
@@ -36,10 +39,16 @@ const pickImage = async () => {
         <StatusBar barStyle="light-content" />
         <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()} }>
          <View style={styles.container}>
-             <TouchableOpacity style={styles.button}> 
-                <Button title="Pick an image" onPress={pickImage} />
-                <Image source={{ uri: image }} style={styles.image} />
-            </TouchableOpacity>
+             <View style={styles.button}> 
+                <Button title="Pick an image" onPress={pickImage}  />
+            </View>
+            { image ? 
+                <View >
+                    <Image source={{ uri: image }} style={styles.image} />
+                    <AntDesign name="closesquareo" size={24} color="red" />
+                </View>
+                : null
+            }
 
             <Text style = {styles.large}>Photo Description </Text>
             <Text style = {styles.small}>
@@ -52,7 +61,6 @@ const pickImage = async () => {
                 onChangeText={newText => changeHandler(newText)}
                 value={text}
                 // placeholder="about photo"
-                // keyboardType="text"
                 required
                 multiline={true} />
 
@@ -71,9 +79,12 @@ const pickImage = async () => {
 const styles = StyleSheet.create({
     container: {
         margin: 20,
+        justifyContent: "center",
+        alignItems: "center",
     },
     input: {
         height: 70,
+        width: "100%",
         marginTop: 10,
         padding: 10,
         borderWidth: 1,
@@ -87,12 +98,9 @@ const styles = StyleSheet.create({
         
     },
     button: {   
-        justifyContent: "center",
-        alignItems: "center",
-        margin: 10,
+        margin: 20,
     },
     image: {
-        margin: 20,
         width: 200,
         height: 200 
     }
