@@ -1,20 +1,31 @@
 import React, {useState, useEffect} from 'react';
-import {View, Button, Image, Text, TextInput,
+import {View, Button, Image, Text, TextInput, FlatList,
         StatusBar, TouchableOpacity, StyleSheet,
-        Keyboard, TouchableWithoutFeedback} from "react-native"; 
+        Keyboard, TouchableWithoutFeedback} from "react-native";      
 import { AntDesign } from '@expo/vector-icons'; 
 import * as ImagePicker from 'expo-image-picker';
 
 export default function PhotoUploader() {
 
-    const [text, setText] = useState("about");
+    const [text, setText] = useState(null);
     const [image, setImage] = useState(null);
+    const [category, setCategory] = useState(null);
+
+    const categories = [
+        {name: "Landscape",  key: 1},
+        {name: "Street Photo", key:2},
+        {name: "Portrait",  key: 3},
+        {name: "Architecture",  key: 4},
+        {name: "Black & White",  key: 5},
+        {name: "Macro",  key: 6}, 
+        {name: "People",  key:7}
+    ]
 
     const changeHandler = newText => {
         setText(newText)
     }
 
-    const pickImage = async () => {
+    const selectImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: false,
@@ -36,8 +47,22 @@ export default function PhotoUploader() {
         <StatusBar barStyle="light-content" />
         <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()} }>
          <View style={styles.container}>
+
+        <Text style={styles.large}>Chose a category</Text>
+        <FlatList 
+            style={{alignSelf: 'center', margin: 12,}}
+            data={categories}
+            numColumns={2}
+            renderItem={ ({item}) =>
+                <TouchableOpacity   style={styles.category}  
+                                    onPress={() => setCategory(item.name)} > 
+                    <Text>{item.name}</Text>
+                </TouchableOpacity>                        
+            }          
+        />
+
              <View style={styles.button}> 
-                <Button title="Pick an image" onPress={pickImage}  />
+                <Button title="Pick an image" onPress={selectImage}  />
             </View>
             { image ? 
                 <View >
@@ -54,15 +79,15 @@ export default function PhotoUploader() {
 
             <Text style = {styles.large}>Photo Description </Text>
             <Text style = {styles.small}>
-                Tell users something about this photo,
+                Tell users about the photo,
                 when/where/how it was made or story
-                what inspired you to take this shot</Text>  
+                what inspired you to take this shot.</Text>  
                 
             <TextInput
                 style={styles.input}
                 onChangeText={newText => changeHandler(newText)}
                 value={text}
-                // placeholder="about photo"
+                // placeholder="about"
                 required
                 multiline={true} />
 
@@ -88,7 +113,8 @@ const styles = StyleSheet.create({
         height: 70,
         width: "100%",
         marginTop: 10,
-        padding: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
         borderWidth: 1,
     },
     large: {
@@ -109,6 +135,15 @@ const styles = StyleSheet.create({
     closeIcon: {
         alignSelf: "center",
         marginBottom: 20,    
+    },
+    category: {
+        borderWidth: 1,
+        margin: 10,
+        padding: 10,
+        width: 120,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "silver",
     }
     
 })
