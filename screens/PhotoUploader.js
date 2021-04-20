@@ -46,23 +46,9 @@ export default function PhotoUploader() {
         <>
         <StatusBar barStyle="light-content" />
         <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()} }>
-         <View style={styles.container}>
-
-        <Text style={styles.large}>Chose a category</Text>
-        <FlatList 
-            style={{alignSelf: 'center', margin: 12,}}
-            data={categories}
-            numColumns={2}
-            renderItem={ ({item}) =>
-                <TouchableOpacity   style={styles.category}  
-                                    onPress={() => setCategory(item.name)} > 
-                    <Text>{item.name}</Text>
-                </TouchableOpacity>                        
-            }          
-        />
-
-             <View style={styles.button}> 
-                <Button title="Pick an image" onPress={selectImage}  />
+        <View style={styles.container}>
+        <View style={styles.button}> 
+            <Button color="grey" title="Pick an image" onPress={selectImage}  />
             </View>
             { image ? 
                 <View >
@@ -77,25 +63,37 @@ export default function PhotoUploader() {
                 : null
             }
 
-            <Text style = {styles.large}>Photo Description </Text>
-            <Text style = {styles.small}>
-                Tell users about the photo,
-                when/where/how it was made or story
-                what inspired you to take this shot.</Text>  
+            <Text style = {styles.large}>Add a description. </Text>
+            {/* <Text style = {styles.small}>
+                Tell us about the photo, when/where it was taken or
+                what inspired you for this shot.</Text>   */}
                 
             <TextInput
                 style={styles.input}
                 onChangeText={newText => changeHandler(newText)}
                 value={text}
-                // placeholder="about"
+                placeholder=" Tell us about the photo, when/where it was taken or
+                what inspired you for this shot."
                 required
                 multiline={true} />
 
+        <Text style={styles.large}>Chose a category</Text>
+        <FlatList 
+            style={{alignSelf: 'center', margin: 7,}}
+            data={categories}
+            numColumns={2}
+            renderItem={ ({item}) =>
+                <TouchableOpacity   style={styles.category}  
+                                    onPress={() => setCategory(item.name)} > 
+                    <Text>{item.name}</Text>
+                </TouchableOpacity>                        
+            }          
+        />
 
-            <View style={styles.button}  >
+            <View style={styles.button}>
                 <Button title="Submit" onPress={()=>console.log("submit")} />
                         {/* button can have color prop only, styles dont work with button component, 
-                            need to create custom buttom component apply styles for surounded View */}
+                            need to create custom buttom component or apply styles for surounded View */}
             </View>
         </View>
         </TouchableWithoutFeedback>
@@ -113,6 +111,7 @@ const styles = StyleSheet.create({
         height: 70,
         width: "100%",
         marginTop: 10,
+        marginBottom: 30,
         paddingLeft: 20,
         paddingRight: 20,
         borderWidth: 1,
@@ -121,12 +120,12 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "bold",
     },
-    small: {
-        fontSize: 14,
-        
-    },
+    // small: {
+    //     fontSize: 14,  
+    // },
     button: {   
         margin: 20,
+        borderWidth: 1,
     },
     image: {
         width: 200,
