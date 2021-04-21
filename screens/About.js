@@ -5,6 +5,6 @@ export default function About() {
         return (
             <Text> ABOUT SECTION</Text>
         );
-    }
+}
 
 

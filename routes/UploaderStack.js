@@ -8,11 +8,10 @@ const screens = {
         screen: PhotoUploader,
                 // in case if you don't need to render a custom Header component
                 // navigationOptions: {
-                    // screen title in the header
-                    // title: "About the App"
+                    // title: "Photo Uploader"
                 //}
 
-                // rendering a custom Header component
+                // rendering a custom Header component with icon
         navigationOptions: ({navigation}) => { 
             return {headerTitle:() => <Header navigation={navigation} title="Photo Uploader" />
             }
