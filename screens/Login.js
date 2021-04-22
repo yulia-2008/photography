@@ -20,21 +20,29 @@ export default function About({navigation}) {
                       password: password}
                 })
             } 
-            // http://127.0.0.1:4000/login
-            // http://10.0.2.2/login
-            
-            fetch('http:/192.168.1.145:3000/login', options)  // got toket in response !
+
+
+            // 127.0.0.1:3000 - rails server
+            // 192.168.1.145:19000 -  Emulator
+            // 192.168.1.145  - ip adress of my computer
+            // 192.168.1.145:19002  -  Metro server
+
+            // Android emulator and Rails server have different IP
+            // => Errors on Fetch to backend ("Network request failed")
+            // I changed IP for rails server (in backend: config/puma.rb) for the same as Emulator has, error is gone!
+     
+            fetch('http://192.168.1.145:3000/login', options)  // got toket in response !
             .then(response => response.json())
             .then(resp =>{console.log("hey", resp)
                 // if (resp.user) {
-        //         //     localStorage.setItem("token", resp.jwt) 
-        //         //     this.setState({currentUser: resp.user,
-        //         //                   failMessage: ""
-        //         //                   }, ()=> this.props.history.push('/')
-        //         //                   )
-        //         // }
-        //         // else { this.setState({failMessage: resp})
-        //         // }
+                 //     localStorage.setItem("token", resp.jwt) 
+                 //     this.setState({currentUser: resp.user,
+                 //                   failMessage: ""
+                //                   }, ()=> this.props.history.push('/')
+                 //                   )
+                 // }
+                 // else { this.setState({failMessage: resp})
+                 // }
              })
     }
 
