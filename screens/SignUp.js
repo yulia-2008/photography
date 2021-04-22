@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
+import {View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
 
 export default function About({navigation}) {
 
@@ -34,7 +34,11 @@ console.log(data)
                             secureTextEntry={true}
                             onChangeText={data => changeHandler(data)}/>          
 
-                 
+                <View style={styles.button}>
+                    <Button title="Create an account" onPress={()=>console.log("submit")} />
+                     {/* button can have color prop only, styles dont work with button component, 
+                        need to create custom buttom component or apply styles for surounded View */}
+                </View>
                 
             </View> 
             </TouchableWithoutFeedback>    
@@ -55,6 +59,10 @@ const styles = StyleSheet.create({
         paddingLeft: 7,
         borderWidth: 1,
         borderColor: "silver",
-    }
+    },
+    button: {   
+        margin: 20,
+        borderWidth: 1,
+    },
 })
 
