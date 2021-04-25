@@ -1,15 +1,22 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default function About({navigation}) {
 
+    // if variables set to null, it does not go back to null after a user erase the entered data,
+    // the type is string now, so confirmation does not match.
+
     const [username, setUsername] = useState("");
-    const [password, setPassword] = useState(""); // if set password to null, it does not go back to null after a user erase the entered password, the type is string now, so confirmation does not match.
+    const [password, setPassword] = useState(""); 
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [city, setCity] = useState("");
     const [passwordError, setPasswordError] = useState(null);
     const [cityError, setCityError] = useState(null);
     const [usernameError, setUsernameError] = useState(null);
+    const [jwt, setJWT] = useState(null);
+    const [failMessage, setFailMessage] = useState(null);
+
     
 
     // const passwordHandler = data => {
@@ -22,28 +29,25 @@ export default function About({navigation}) {
     // }
 
     const submitHandler = () => {
+       
         if (password !== passwordConfirm) {
             setPasswordError("Password confirmation must match password.")
         }
-        else if(password.length === 0) { 
+        else if (password.length === 0) { 
             setPasswordError("Password can not be blank")
-        }
-        else if(city.length === 0) { 
-            setCityError("City can not be blank")
-        }
-        else if(username.length === 0) { 
-            setUsernameError("Username can not be blank")
-        }
-        else {
-            setPasswordError(null)
-            setCityError(null)
-            setUsernameError(null)
-        }
+        } 
+
+        city.length === 0 ? 
+            setCityError("City can not be blank") : null
+        
+        username.length === 0 ? 
+            setUsernameError("Username can not be blank") : null
         signUpHandler()
     }
 
     
     const signUpHandler = () => {
+       
     // get token in response
     let options = { method: 'POST',
                     headers: {
@@ -60,19 +64,19 @@ export default function About({navigation}) {
                    }
         fetch('http://192.168.1.145:3000/users', options)
         .then(response => response.json())
-        .then(resp => {console.log("signed")
-        //   if (resp.user) {
-        //       localStorage.setItem("token", resp.jwt) 
-        //       this.setState({currentUser: resp.user, 
-        //                      failMessage: "" }, ()=> this.props.history.push('/profile')
-        //       )
-        //   }
-        //   else {this.setState({failMessage: {"error": "User with the same username already exists!" }
-        //   })
-        //   }
+        .then(resp => { 
+            if (resp.jwt) {
+                AsyncStorage.setItem("JWT", JSON.stringify(resp.jwt)) 
+                navigation.navigate('About')
+                setJWT(resp.jwt)
+                setFailMessage(null)
+               
+            }
+            else {
+                setFailMessage("Failed to create an account")
+            }
         })
-        //collback function run after state is set
-}
+    }
 
         return (
             <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()} }>
@@ -105,6 +109,7 @@ export default function About({navigation}) {
                      {/* button can have color prop only, styles dont work with button component, 
                         need to create custom buttom component or apply styles for surounded View */}
                 </View>
+                <Text style={{color: "red"}}>{failMessage}</Text>
                 
             </View> 
             </TouchableWithoutFeedback>    

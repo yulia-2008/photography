@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default function About({navigation}) {
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [jwt, setJWT] = useState(null);
+    const [failMessage, setFailMessage] = useState(null);
 
     const loginHandler = event => {
-        // console.log(event)
-        // event.preventDefault()
         let options = { 
             method: 'POST',
             headers: {
@@ -33,26 +34,19 @@ export default function About({navigation}) {
      
             fetch('http://192.168.1.145:3000/login', options)  // got toket in response !
             .then(response => response.json())
-            .then(resp =>{console.log("hey", resp)
-                // if (resp.user) {
-                 //     localStorage.setItem("token", resp.jwt) 
-                 //     this.setState({currentUser: resp.user,
-                 //                   failMessage: ""
-                //                   }, ()=> this.props.history.push('/')
-                 //                   )
-                 // }
-                 // else { this.setState({failMessage: resp})
-                 // }
-             })
+            .then(resp => {
+                if (resp.jwt) {
+                    AsyncStorage.setItem("JWT", JSON.stringify(resp.jwt)) 
+                    navigation.navigate('About')
+                    setJWT(resp.jwt)
+                    setFailMessage(null)
+                }
+                else {
+                    setFailMessage(resp.message)
+                }
+            })
     }
-
-    // const usernameHandler = (data) => {
-    //     setUsername(data)
-    // }
-    // const passwordHandler = (data) => {
-    //     setPassword(data)
-    // }
-        
+      
 
         return (
             <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()} }>
@@ -70,10 +64,11 @@ export default function About({navigation}) {
                 <View style={styles.button}>
                     <Button title="Login" onPress={event => loginHandler(event)} />
                      {/* button can have color prop only, styles dont work with button component, 
-                        need to create custom buttom component or apply styles for surounded View */}
+                        need to create custom buttom component or apply styles for surounded View */}                  
                 </View>
+                <Text style={{color: "red"}}>{failMessage}</Text>
 
-                <Text>Don't have an account?</Text>
+                <Text style={{paddingTop: 35}}>Don't have an account?</Text>
                 
                 <Text style={styles.signUp}
                       onPress={() => navigation.navigate("Sign Up")}>Sing up</Text> 
@@ -104,7 +99,6 @@ const styles = StyleSheet.create({
     button: { 
         width: "50%", 
         marginTop: 10, 
-        marginBottom: 35,
         borderWidth: 1,
     },
 })
