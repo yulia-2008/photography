@@ -37,6 +37,7 @@ export default function About({navigation}) {
             .then(resp => {
                 if (resp.jwt) {
                     AsyncStorage.setItem("JWT", JSON.stringify(resp.jwt)) 
+                    AsyncStorage.setItem("currentUser", JSON.stringify(resp.user.username)) 
                     navigation.navigate('About')
                     setJWT(resp.jwt)
                     setFailMessage(null)

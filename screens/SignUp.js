@@ -15,6 +15,7 @@ export default function About({navigation}) {
     const [cityError, setCityError] = useState(null);
     const [usernameError, setUsernameError] = useState(null);
     const [jwt, setJWT] = useState(null);
+    // const [currentUser, setcurrentUser] = useState(null);
     const [failMessage, setFailMessage] = useState(null);
 
     
@@ -67,8 +68,11 @@ export default function About({navigation}) {
         .then(resp => { 
             if (resp.jwt) {
                 AsyncStorage.setItem("JWT", JSON.stringify(resp.jwt)) 
+                AsyncStorage.setItem("currentUser", JSON.stringify(resp.user.username)) 
                 navigation.navigate('About')
                 setJWT(resp.jwt)
+                // setCurrentUser(resp.user.username)
+
                 setFailMessage(null)
                
             }
