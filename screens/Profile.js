@@ -2,13 +2,14 @@ import React from 'react';
 import {Text, Button, View, StyleSheet} from "react-native";
 import AsyncStorage from '@react-native-community/async-storage'
 
-export default function Profile() {
+export default function Profile({navigation}) {
 
     const logoutHandler = () => {
         
         AsyncStorage.removeItem("JWT") 
         AsyncStorage.removeItem("currentUser") 
-        // navigation.navigate('About')
+        navigation.navigate('About')
+        console.log("removed")
         
     }
 

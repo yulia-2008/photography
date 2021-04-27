@@ -1,9 +1,10 @@
 import React from 'react';
 import {Text, StyleSheet} from "react-native";
 
-export default function About() {
+export default function About({ navigation }) {
         return (
-            <Text> ABOUT SECTION</Text>
+            <Text> {console.log("in about")}</Text>
+
         );
 }
 

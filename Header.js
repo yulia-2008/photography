@@ -17,9 +17,8 @@ export default function Header({navigation, title}) {
     const getCurrentUser = async () =>  {
         await AsyncStorage.getItem('currentUser')
         .then(resp => JSON.parse(resp))
-        .then(resp => {setCurrentUser(resp), console.log(resp)
-        })  
-      }
+        .then(resp => setCurrentUser(resp)) 
+    }
 
     return( 
         <View style={styles.header}>
