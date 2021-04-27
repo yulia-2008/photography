@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 export default function Header({navigation, title}) {
 
-    useEffect(() => {getCurrentUser()}, [])
+    useEffect(() => {getCurrentUser()})
     const [currentUser, setCurrentUser] = useState(null);
 
         // Header component takes props "navigation" from StackNavigation.js
@@ -17,17 +17,24 @@ export default function Header({navigation, title}) {
     const getCurrentUser = async () =>  {
         await AsyncStorage.getItem('currentUser')
         .then(resp => JSON.parse(resp))
-        .then(resp => {setCurrentUser(resp)
+        .then(resp => {setCurrentUser(resp), console.log(resp)
         })  
       }
 
     return( 
         <View style={styles.header}>
-            {console.log('currentUser', currentUser)}
             {/* icon for the menu */}
-            <MaterialIcons name="menu" size={28} onPress={openMenu} style={styles.icon}/>
+            <MaterialIcons name="menu" size={28} onPress={openMenu}/>
             <Text style={styles.headerText}>{title}</Text>
-            <Text style={styles.welcome}>Welcome {currentUser}</Text>
+            <View style={styles.align}>
+            {currentUser?
+                <>               
+                <Text style={styles.currentUser}>Welcome</Text>
+                <Text style={styles.currentUser}>{currentUser}</Text> 
+                </>             
+                : null
+            }
+             </View>
         </View>
     )
 }
@@ -35,24 +42,22 @@ export default function Header({navigation, title}) {
 const styles = StyleSheet.create({
     header: {
         height: "100%",
+        paddingBottom: 10,
         flexDirection: "row",
         alignItems: "center", 
-        justifyContent: "space-around",
+        justifyContent: "space-between",
     },
     headerText: {
         fontSize: 20,
         fontWeight: "bold",
+        
     },
-    icon: {
-        position: "absolute",
-        left: 15,
+    align: {
+        alignItems: "center", 
     },
-    welcome: {
-        color: "white",
+    currentUser :{
+        color: "green",
         fontSize: 17,
         fontWeight: "bold",
-        // right: 1,
-
     }
-
 })

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
 import AsyncStorage from '@react-native-community/async-storage'
 
-export default function About({navigation}) {
+export default function SignUp({navigation}) {
 
     // if variables set to null, it does not go back to null after a user erase the entered data,
     // the type is string now, so confirmation does not match.

@@ -45,7 +45,6 @@ const StackNavigator = createStackNavigator(screens, {
     defaultNavigationOptions:{
         // header text color
         headerTintColor: "Black",
-
         headerStyle:{backgroundColor: "silver", height: 60}
     }
 });

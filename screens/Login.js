@@ -2,14 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
 import AsyncStorage from '@react-native-community/async-storage'
 
-export default function About({navigation}) {
+export default function Login({navigation}) {
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [jwt, setJWT] = useState(null);
     const [failMessage, setFailMessage] = useState(null);
 
-    const loginHandler = event => {
+    const loginHandler = () => {
         let options = { 
             method: 'POST',
             headers: {
@@ -21,7 +21,6 @@ export default function About({navigation}) {
                       password: password}
                 })
             } 
-
 
             // 127.0.0.1:3000 - rails server
             // 192.168.1.145:19000 -  Emulator
@@ -63,7 +62,7 @@ export default function About({navigation}) {
                             onChangeText={data => setPassword(data)}/>
 
                 <View style={styles.button}>
-                    <Button title="Login" onPress={event => loginHandler(event)} />
+                    <Button title="Login" onPress={ loginHandler} />
                      {/* button can have color prop only, styles dont work with button component, 
                         need to create custom buttom component or apply styles for surounded View */}                  
                 </View>
