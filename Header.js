@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet} from "react-native";
 import {MaterialIcons} from '@expo/vector-icons';
-import { RawButton } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage'
 import {UserContext}  from './App.js'
 
 

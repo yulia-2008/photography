@@ -40,9 +40,11 @@ export default function App() {
                             drawerStyle={{width: "50%", backgroundColor: 'white'}} >                    
               <Drawer.Screen name="About" component={AboutStack} />
               <Drawer.Screen name="Photo Gallery" component={GalleryStack} />
-              <Drawer.Screen name="Add Photo" component={UploaderStack} />
-              {currentUser ? 
+              {currentUser ?
+                <>
+                <Drawer.Screen name="Add Photo" component={UploaderStack} /> 
                 <Drawer.Screen name="Profile" component={ProfileStack} />
+                </>
                 :
                 <Drawer.Screen name="Login" component={LoginStack} />
               }              

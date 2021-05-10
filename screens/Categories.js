@@ -22,7 +22,7 @@ export default function Categories({navigation}) {
                     numColumns={2}
                     renderItem={({item}) =>
                         <TouchableOpacity   style={styles.category}
-                                            onPress={() => navigation.navigate("Photos", item)} >
+                                            onPress={() => navigation.navigate("Photos", {category: item})} >
                             <Text>{item.name}</Text>
                             <Image source={require('./1.jpg')} style={styles.image}/> 
                         </TouchableOpacity>   
