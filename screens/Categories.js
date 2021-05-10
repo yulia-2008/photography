@@ -4,7 +4,6 @@ import {View, Text, Image, FlatList, TouchableOpacity, StyleSheet} from "react-n
 
 export default function Categories({navigation}) {
     
-
     const [categories, updateCategories] = useState([
         {name: "Landscape",  key: 1},
         {name: "Street Photo", key:2},
@@ -12,7 +11,7 @@ export default function Categories({navigation}) {
         {name: "Architecture",  key: 4},
         {name: "Black & White",  key: 5},
         {name: "Macro",  key: 6}, 
-        {name: "People",  key:7}
+        {name: "People",  key: 7}
     ])
     
         return (
@@ -21,9 +20,9 @@ export default function Categories({navigation}) {
                     style={{alignSelf: 'center'}}
                     data={categories}
                     numColumns={2}
-                    renderItem={ ({item}) =>
+                    renderItem={({item}) =>
                         <TouchableOpacity   style={styles.category}
-                                            onPress={() => navigation.navigate(item.name, item)} >
+                                            onPress={() => navigation.navigate("Photos", item)} >
                             <Text>{item.name}</Text>
                             <Image source={require('./1.jpg')} style={styles.image}/> 
                         </TouchableOpacity>   

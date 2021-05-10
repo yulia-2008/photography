@@ -23,8 +23,7 @@ export default function LoginStack({ navigation }) {
           <Stack.Screen
             name="Sign Up"
             component={SignUp}
-            options={{
-                headerTitle:() => <Header navigation={navigation} title="Sign Up" />,
+            options={{              
                 headerStyle: {                   
                     backgroundColor: "silver", //Set Header color
                     height: 60,

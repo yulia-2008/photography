@@ -1,15 +1,24 @@
-import React, {useState, useEffect} from 'react';
+// import React, {useState, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage';
+import {UserContext}  from '../App.js'
 
 export default function Login({navigation}) {
+    const userData = useContext(UserContext);
+        // UserContext comes from App.js,
+        // It's an object {user: null, authenticate: () => {}}
+        // In App.js  return() Provider gives a value to this object
+        // value={{user: currentUser, authenticate: loginOrLogout }}
+        // I use userData.authenticate in loginHandler after username is set to AsyncStorage
+        // It's invoke loginOrLogout method in app.js which set username state in App.js
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [jwt, setJWT] = useState(null);
     const [failMessage, setFailMessage] = useState(null);
 
-    const loginHandler = () => {
+    const loginHandler = () => {       
         let options = { 
             method: 'POST',
             headers: {
@@ -22,14 +31,14 @@ export default function Login({navigation}) {
                 })
             } 
 
-            // 127.0.0.1:3000 - rails server
-            // 192.168.1.145:19000 -  Emulator
-            // 192.168.1.145  - ip adress of my computer
-            // 192.168.1.145:19002  -  Metro server
+                // 127.0.0.1:3000 - rails server
+                // 192.168.1.145:19000 -  Emulator
+                // 192.168.1.145  - ip adress of my computer
+                // 192.168.1.145:19002  -  Metro server
 
-            // Android emulator and Rails server have different IP
-            // => Errors on Fetch to backend ("Network request failed")
-            // I changed IP for rails server (in backend: config/puma.rb) for the same as Emulator has, error is gone!
+                // Android emulator and Rails server have different IP
+                // => Errors on Fetch to backend ("Network request failed")
+                // I changed IP for rails server (in backend: config/puma.rb) for the same as Emulator has, error is gone!
      
             fetch('http://192.168.1.145:3000/login', options)  // got toket in response !
             .then(response => response.json())
@@ -37,14 +46,17 @@ export default function Login({navigation}) {
                 if (resp.jwt) {
                     AsyncStorage.setItem("JWT", JSON.stringify(resp.jwt)) 
                     AsyncStorage.setItem("currentUser", JSON.stringify(resp.user.username)) 
-                    navigation.navigate('About')
+                    console.log("in login container", username)
+                    navigation.navigate('About', )
                     setJWT(resp.jwt)
                     setFailMessage(null)
+                    userData.authenticate(username) // invoke loginOrLogout method in app.js which set username state in App.js
                 }
                 else {
                     setFailMessage(resp.message)
                 }
             })
+            
     }
       
 

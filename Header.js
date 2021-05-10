@@ -1,24 +1,24 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet} from "react-native";
 import {MaterialIcons} from '@expo/vector-icons';
 import { RawButton } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage'
+import {UserContext}  from './App.js'
 
 
 export default function Header({navigation, title}) {
-
-    useEffect(() => {getCurrentUser()})
-    const [currentUser, setCurrentUser] = useState(null);
-
+        
+    const openMenu = () => {navigation.openDrawer()}
         // Header component takes props "navigation" from StackNavigation.js
         // openDrawer is a built in function.
-    const openMenu = () => {navigation.openDrawer()}
 
-    const getCurrentUser = async () =>  {
-        await AsyncStorage.getItem('currentUser')
-        .then(resp => JSON.parse(resp))
-        .then(resp => setCurrentUser(resp)) 
-    }
+    const userData = useContext(UserContext);
+        // UserContext comes from App.js,
+        // It's an object {user: null, authenticate: () => {}}
+        // In App.js  return() Provider gives a value to this object
+        // value={{user: currentUser, authenticate: loginOrLogout }}
+        // I use userData.user to display "Welcome username" 
+        
 
     return( 
         <View style={styles.header}>
@@ -26,10 +26,10 @@ export default function Header({navigation, title}) {
             <MaterialIcons name="menu" size={28} onPress={openMenu}/>
             <Text style={styles.headerText}>{title}</Text>
             <View style={styles.align}>
-            {currentUser?
+            {userData.user?
                 <>               
                 <Text style={styles.currentUser}>Welcome</Text>
-                <Text style={styles.currentUser}>{currentUser}</Text> 
+                <Text style={styles.currentUser}>{userData.user}</Text> 
                 </>             
                 : null
             }

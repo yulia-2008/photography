@@ -1,16 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, Button, View, StyleSheet} from "react-native";
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage';
+import {UserContext}  from '../App.js'
 
 export default function Profile({navigation}) {
+    const userData = useContext(UserContext);
+        // UserContext comes from App.js,
+        // It's an object {user: null, authenticate: () => {}}
+        // In App.js  return() Provider gives a value to this object
+        // value={{user: currentUser, authenticate: loginOrLogout }}
+        // I use userData.authenticate in logoutHandler after username is removed in AsyncStorage
+        // It's invoke loginOrLogout method in app.js which set username state (to null) in App.js
 
-    const logoutHandler = () => {
-        
+    const logoutHandler = () => {       
         AsyncStorage.removeItem("JWT") 
         AsyncStorage.removeItem("currentUser") 
         navigation.navigate('About')
-        console.log("removed")
-        
+        userData.authenticate(null)     
     }
 
 
