@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {View, Button, Image, Text, TextInput, FlatList,
-        StatusBar, TouchableOpacity, StyleSheet,
+import {View, ScrollView, Button, Image, Text, TextInput, FlatList,
+        TouchableOpacity, StyleSheet,
         Keyboard, TouchableWithoutFeedback} from "react-native";      
 import { AntDesign } from '@expo/vector-icons'; 
 import * as ImagePicker from 'expo-image-picker';
@@ -39,14 +39,38 @@ export default function PhotoUploader() {
         if (!result.cancelled) {
         setImage(result.uri);
         }
-    };
+    }
+
+    const submitHandler = () => {
+        console.log('text', text)
+        console.log('image', image)
+        console.log('category', category)
+
+            let options = { method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Accept: 'application/json'
+                            },
+                            body: JSON.stringify({
+                                   photo: { category: category,
+                                            votes: 0,
+                                            user_id: 3,
+                                            description: text,
+                                   }
+                            })
+                           }
+                fetch('http://192.168.1.145:3000/photos', options)
+                .then(response => response.json())
+                .then(resp => {console.log("response", resp)
+                  
+                })
+               
+    }
 
     
     return (
-        <>
-        <StatusBar barStyle="light-content" />
         <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()} }>
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
         <View style={styles.button}> 
             <Button color="grey" title="Pick an image" onPress={selectImage}  />
             </View>
@@ -63,11 +87,7 @@ export default function PhotoUploader() {
                 : null
             }
 
-            <Text style = {styles.large}>Add a description. </Text>
-            {/* <Text style = {styles.small}>
-                Tell us about the photo, when/where it was taken or
-                what inspired you for this shot.</Text>   */}
-                
+            <Text style = {styles.large}>Add a description. </Text>            
             <TextInput
                 style={styles.input}
                 onChangeText={newText => changeHandler(newText)}
@@ -91,21 +111,21 @@ export default function PhotoUploader() {
         />
 
             <View style={styles.button}>
-                <Button title="Submit" onPress={()=>console.log("submit")} />
+                <Button title="Submit" onPress={submitHandler} />
                         {/* button can have color prop only, styles dont work with button component, 
                             need to create custom buttom component or apply styles for surounded View */}
             </View>
-        </View>
+        </ScrollView>
         </TouchableWithoutFeedback>
-        </>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         margin: 20,
-        justifyContent: "center",
-        alignItems: "center",
+        // justifyContent: "center",
+        // alignItems: "center",
     },
     input: {
         height: 70,
@@ -117,6 +137,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     large: {
+        alignSelf: "center", 
         fontSize: 15,
         fontWeight: "bold",
     },
@@ -129,7 +150,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 200,
-        height: 200 
+        height: 200, 
+        alignSelf: "center", 
     },
     closeIcon: {
         alignSelf: "center",

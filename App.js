@@ -33,8 +33,11 @@ export default function App() {
   }
 
   return (
+    <>
+      <StatusBar barStyle="light-content" />
       <UserContext.Provider value={{user: currentUser, authenticate: loginOrLogout }}>
           {/* Provider is passing a value to UserContext object for using it in Navigator (in login and Profile container) */}
+      
         <NavigationContainer>         
           <Drawer.Navigator initialRouteName="About"
                             drawerStyle={{width: "50%", backgroundColor: 'white'}} >                    
@@ -51,5 +54,6 @@ export default function App() {
           </Drawer.Navigator>
         </NavigationContainer>
       </UserContext.Provider>
+      </>
   );
 }

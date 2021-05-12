@@ -24,7 +24,8 @@ export default function Categories({navigation}) {
                         <TouchableOpacity   style={styles.category}
                                             onPress={() => navigation.navigate("Photos", {category: item})} >
                             <Text>{item.name}</Text>
-                            <Image source={require('./1.jpg')} style={styles.image}/> 
+                            <Image source={require('./1.jpg')} style={styles.image}/>   
+                            {/* image should be in the same folder */}
                         </TouchableOpacity>   
                     }         
                 />
