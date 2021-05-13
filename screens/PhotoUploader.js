@@ -46,25 +46,43 @@ export default function PhotoUploader() {
         console.log('image', image)
         console.log('category', category)
 
-            let options = { method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Accept: 'application/json'
-                            },
-                            body: JSON.stringify({
-                                   photo: { category: category,
-                                            votes: 0,
-                                            user_id: 3,
-                                            description: text,
+        let newPhotoId;
+
+// 1. Creating Picture instance in DB (post to .../photos)
+// 2. Attaching an image to the Picture instance (post to .../upload_image)
+        if (image) {  
+        let createOptions = { method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json'
+                        },
+                        body: JSON.stringify({
+                            photo: {category: category,
+                                    votes: 0,
+                                    user_id: 3,
+                                    description: text,
                                    }
-                            })
-                           }
-                fetch('http://192.168.1.145:3000/photos', options)
-                .then(response => response.json())
-                .then(resp => {console.log("response", resp)
-                  
-                })
-               
+                        })
+                        }
+        fetch('http://192.168.1.145:3000/photos', createOptions)
+        .then(response => response.json())
+        .then(resp => {console.log(".../photos", resp), newPhotoId=resp.photo.id, console.log("newPhotoId", newPhotoId)}
+        )
+        
+        let formData = new FormData()
+        formData.append("image", image) // creating obj with key "image" and value.
+        let uploadOptions = { method: 'POST',          
+                        headers: {
+                            // Dont need to include 'Content-Type': 'application/json', it will cause a bug !!!!
+                            Accept: 'application/json'
+                            },
+                        body: formData
+                        }
+        fetch(`http://192.168.1.145:3000/photos/${newPhotoId}/upload_image`, uploadOptions)
+        .then(response => response.json())
+        .then(response => console.log("../upload_image", response)
+        )         
+        }                 
     }
 
     
