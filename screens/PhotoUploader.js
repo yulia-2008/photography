@@ -59,7 +59,7 @@ export default function PhotoUploader() {
                                         votes: 0,
                                         user_id: 2,
                                         description: text,
-                                        image: formData
+                                        img: formData
                                  }
                               })
                             }
