@@ -39,7 +39,7 @@ export default function Login({navigation}) {
                 // => Errors on Fetch to backend ("Network request failed")
                 // I changed IP for rails server (in backend: config/puma.rb) for the same as Emulator has, error is gone!
      
-            fetch('http://192.168.1.145:3000/login', options)  // got toket in response !
+            fetch('https://photoap-backend.herokuapp.com/login', options)  // got toket in response !
             .then(response => response.json())
             .then(resp => {
                 if (resp.jwt) {

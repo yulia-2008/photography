@@ -63,7 +63,7 @@ export default function SignUp({navigation}) {
                             }
                     })
                    }
-        fetch('http://192.168.1.145:3000/users', options)
+        fetch('https://photoap-backend.herokuapp.com/users', options)
         .then(response => response.json())
         .then(resp => { 
             if (resp.jwt) {
