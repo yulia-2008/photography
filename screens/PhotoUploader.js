@@ -43,16 +43,16 @@ export default function PhotoUploader() {
     }
 
     const submitHandler = () => {
+    // 1. Creating Picture instance in DB (post to .../photos)
+    // 2. Attaching an image to the Picture instance (post to .../upload_image)
         
         let newPhotoId;
         let formData = new FormData()
-        // formData.append("image", image) // creating obj with key "image" and value.
         formData.append("image",  { uri: image, name: 'image.jpg', type: 'image/jpeg' })
 
-// 1. Creating Picture instance in DB (post to .../photos)
-// 2. Attaching an image to the Picture instance (post to .../upload_image)
         if (image) {  
-        let createOptions = { method: 'POST',
+        let createOptions = { 
+                        method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             Accept: 'application/json'
@@ -64,65 +64,31 @@ export default function PhotoUploader() {
                                     description: text,
                                    }
                         })
-                        }
+        }
         fetch('http://192.168.1.145:3000/photos', createOptions)
         .then(response => response.json())
-        .then(resp => {console.log(".../photos", resp), newPhotoId=resp.photo.id, uploadImg(newPhotoId, formData)}
-        )
-     }
-     const uploadImg = (newPhotoId, formData) => {  
-         console.log(".../upload_image", newPhotoId)
-        let uploadOptions = { method: 'POST',          
+        .then(resp => { console.log(".../photos", resp), 
+                        newPhotoId=resp.photo.id, 
+                        uploadImg(newPhotoId, formData)
+        })
+        }
+    }
+
+    const uploadImg = (newPhotoId, formData) => {  
+        let uploadOptions = { 
+                        method: 'POST',          
                         headers: {
                             "Content-Type": "multipart/form-data",
                             // make sure content-type is right
                             Accept: 'application/json'
                             },
                         body:  formData
-                                            }
+        }
         fetch(`http://192.168.1.145:3000/photos/${newPhotoId}/upload_image`, uploadOptions)
         .then(response => response.json())
         .then(response => console.log("../upload_image", response)
         ) 
-                    }        
-                         
-
-//     const submitHandler = () => {
-// // Post to .../photos,  #create controller: creating Photo Instance and attaching an image file to the Photo instance 
-        
-//         let formData = new FormData()
-//         // formData.append("image", image) // creating obj with key "image" and value.
-//         // formData.append("file",  { uri: image.uri, name: 'image.jpg', type: 'image/jpeg' })
-//         let filename = image.uri.split('/').pop();
-//         formData.append("image", image.uri)
-        
-
-//         if (image) {  console.log("formData", formData)
-//         let options = { method: 'POST',
-//                         headers: {
-//                              'Content-Type': ['application/json',"multipart/form-data"],
-//                             //  "Content-Type": "multipart/form-data",
-//                              // Dont need to include 'Content-Type': 'application/json', it will cause a bug !!!!
-//                             Accept: 'application/json'
-//                         },
-//                         body: JSON.stringify({
-//                             photo: {
-//                                 category: category,
-//                                 votes: 0,
-//                                 user_id: 2,
-//                                 description: text,                          
-//                                 image:  image.uri
-//                             }                             
-//                             })
-//                         }
-
-//         fetch('http://192.168.1.145:3000/photos', options)
-//         //fetch('https://photoap-backend.herokuapp.com/photos', options)
-//         .then(response => response.json())
-//         .then(resp => console.log(".../photos", resp)                    
-//         )      
-//         }                 
-    }
+    }                   
     
     return (
         <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()} }>
