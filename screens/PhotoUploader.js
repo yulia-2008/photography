@@ -65,7 +65,7 @@ export default function PhotoUploader() {
                                    }
                         })
         }
-        fetch('http://192.168.1.145:3000/photos', createOptions)
+        fetch('https://photoap-backend.herokuapp.com/photos', createOptions)
         .then(response => response.json())
         .then(resp => { console.log(".../photos", resp), 
                         newPhotoId=resp.photo.id, 
@@ -84,7 +84,7 @@ export default function PhotoUploader() {
                             },
                         body:  formData
         }
-        fetch(`http://192.168.1.145:3000/photos/${newPhotoId}/upload_image`, uploadOptions)
+        fetch('https://photoap-backend.herokuapp.com/photos/${newPhotoId}/upload_image`, uploadOptions)
         .then(response => response.json())
         .then(response => console.log("../upload_image", response)
         ) 
