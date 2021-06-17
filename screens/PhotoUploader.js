@@ -10,6 +10,8 @@ export default function PhotoUploader() {
     const [text, setText] = useState(null);
     const [image, setImage] = useState(null);
     const [category, setCategory] = useState(null);
+    const [error, setError] = useState(null);
+    
 
     const categories = [
         {name: "Landscape",  key: 1},
@@ -46,6 +48,7 @@ export default function PhotoUploader() {
     // 1. Creating Picture instance in DB (post to .../photos)
     // 2. Attaching an image to the Picture instance (post to .../upload_image)
         
+    if (text !== null && image !== null && category !== null){
         let newPhotoId;
         let formData = new FormData()
         formData.append("image",  { uri: image, name: 'image.jpg', type: 'image/jpeg' })
@@ -73,6 +76,10 @@ export default function PhotoUploader() {
         })
         }
     }
+    else {
+        setError("Make sure you filled out the description filed, celected the image file from your device and celected the category")
+    }
+    }
 
     const uploadImg = (newPhotoId, formData) => {  
         let uploadOptions = { 
@@ -84,7 +91,7 @@ export default function PhotoUploader() {
                             },
                         body:  formData
         }
-        fetch('https://photoap-backend.herokuapp.com/photos/${newPhotoId}/upload_image`, uploadOptions)
+        fetch(`https://photoap-backend.herokuapp.com/photos/${newPhotoId}/upload_image`, uploadOptions)
         .then(response => response.json())
         .then(response => console.log("../upload_image", response)
         ) 
@@ -106,7 +113,8 @@ export default function PhotoUploader() {
                                     onPress={()=> setImage(null)} />
                     </View>
                 </View>
-                : null
+                : 
+                null
             }
 
             <Text style = {styles.large}>Add a description. </Text>            
@@ -125,13 +133,17 @@ export default function PhotoUploader() {
             data={categories}
             numColumns={2}
             renderItem={ ({item}) =>
-                <TouchableOpacity   style={styles.category}  
+                <TouchableOpacity   style={category && category === item.name ?
+                                                [styles.category, {backgroundColor: "grey"}]
+                                                : 
+                                                [styles.category, {backgroundColor: "silver"}]
+                                            }   
                                     onPress={() => setCategory(item.name)} > 
                     <Text>{item.name}</Text>
                 </TouchableOpacity>                        
             }          
         />
-
+            <Text style={{color:"red"}}>{error}</Text> 
             <View style={styles.button}>
                 <Button title="Submit" onPress={submitHandler} />
                         {/* button can have color prop only, styles dont work with button component, 
@@ -186,7 +198,6 @@ const styles = StyleSheet.create({
         width: 120,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "silver",
     }
     
 })

@@ -12,38 +12,33 @@ export default function SignUp({navigation}) {
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [city, setCity] = useState("");
     const [passwordError, setPasswordError] = useState(null);
+    const [confirmationError, setConfirmationError] = useState(null);
     const [cityError, setCityError] = useState(null);
     const [usernameError, setUsernameError] = useState(null);
     const [jwt, setJWT] = useState(null);
     // const [currentUser, setcurrentUser] = useState(null);
     const [failMessage, setFailMessage] = useState(null);
 
-    
-
-    // const passwordHandler = data => {
-    //     if (password === null) {
-    //         setPassword(data)
-    //     }
-    //     else if (password !== data && password !== null) {
-    //        setMessage("Password confirmation must match password.") 
-    //     }
-    // }
-
     const submitHandler = () => {
-       
-        if (password !== passwordConfirm) {
-            setPasswordError("Password confirmation must match password.")
-        }
-        else if (password.length === 0) { 
-            setPasswordError("Password can not be blank")
-        } 
-
-        city.length === 0 ? 
-            setCityError("City can not be blank") : null
+       // invoke signUpHandler() if all fields are ok
+       // set error messages if not
         
-        username.length === 0 ? 
-            setUsernameError("Username can not be blank") : null
-        signUpHandler()
+        if (password === passwordConfirm
+            && password.length !== 0
+            && city.length !== 0
+            && username.length !== 0
+            )
+            {signUpHandler()}
+        else {
+            city.length === 0 ? 
+              setCityError("City can not be blank") : null          
+            username.length === 0 ? 
+              setUsernameError("Username can not be blank") : null 
+            password.length === 0 ?
+              setPasswordError("Password can not be blank!") : null
+            // confirmationError will print upon entering confirmation password
+        }
+
     }
 
     
@@ -94,13 +89,25 @@ export default function SignUp({navigation}) {
                 <Text style={styles.padding}>Set a password</Text>
                 <TextInput  style={styles.input}
                             secureTextEntry={true}
-                            onChangeText={data => {setPassword(data), setPasswordError(null)}}/>
+                            onChangeText={data => { setPassword(data),
+                                                    setPasswordError(null), // deleting error message after unsecsefful submit (when user enter a password) 
+                                                    passwordConfirm === data ?  // if user change password field, after password confirmation field is fill -  confirmation error will be displayed
+                                                        setConfirmationError(null)
+                                                        : 
+                                                        setConfirmationError("Password confirmation must match password.")
+                                                    }}/>
+                <Text style={{color:"red"}}>{passwordError}</Text> 
 
                 <Text style={styles.padding}>Confirm a Password</Text>
                 <TextInput  style={styles.input}
                             secureTextEntry={true}
-                            onChangeText={data => setPasswordConfirm(data)}/> 
-                <Text style={{color:"red"}}>{passwordError}</Text>            
+                            onChangeText={data => { setPasswordConfirm(data),
+                                                    password === data ?
+                                                        setConfirmationError(null)
+                                                        :
+                                                        setConfirmationError("Password confirmation must match password.")
+                                                    }}/> 
+                <Text style={{color:"red"}}>{confirmationError}</Text>            
 
                 <Text style={styles.padding}>City</Text>
                 <TextInput  style={styles.input}

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect, createContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import GalleryStack from './routes/GalleryStack.js';
@@ -10,7 +10,7 @@ import ProfileStack from './routes/ProfileStack.js';
 import AsyncStorage from '@react-native-community/async-storage'
 
 
-export const UserContext = createContext({user: null, authenticate: () => {} });
+export const UserContext = React.createContext({user: null, authenticate: () => {} });
 // It returns an object with 2 values: { Provider, Consumer }
 // I use Provider in return() 
 

@@ -20,7 +20,7 @@ export default function Profile({navigation}) {
     }
 
 
-        return (                 
+        return (               
             <View>
                 <Button title="Logout" onPress={ logoutHandler} />
                      {/* button can have color prop only, styles dont work with button component, 
