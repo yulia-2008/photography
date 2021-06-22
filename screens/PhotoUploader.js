@@ -7,11 +7,12 @@ import * as ImagePicker from 'expo-image-picker';
 
 export default function PhotoUploader() {
 
-    const [text, setText] = useState(null);
+    const [text, setText] = useState("");
     const [image, setImage] = useState(null);
-    const [category, setCategory] = useState(null);
-    const [error, setError] = useState(null);
-    
+    const [category, setCategory] = useState("");
+    const [textError, setTextError] = useState(null);
+    const [imageError, setImageError] = useState(null);
+    const [categoryError, setCategoryError] = useState(null);  
 
     const categories = [
         {name: "Landscape",  key: 1},
@@ -25,6 +26,10 @@ export default function PhotoUploader() {
 
     const changeHandler = newText => {
         setText(newText)
+        newText.trim() !== "" ?   // on input change changing error message
+            setTextError("") 
+            : 
+            setTextError("Fill in a description field!") 
     }
 
     const selectImage = async () => {
@@ -39,7 +44,8 @@ export default function PhotoUploader() {
             });
 
         if (!result.cancelled) { 
-        setImage(result.uri)
+        setImage(result.uri),
+        setImageError(null)
         }
         
     }
@@ -47,13 +53,13 @@ export default function PhotoUploader() {
     const submitHandler = () => {
     // 1. Creating Picture instance in DB (post to .../photos)
     // 2. Attaching an image to the Picture instance (post to .../upload_image)
+    // 3. Set error messages if fetch failed
         
-    if (text !== null && image !== null && category !== null){
+    if (text.trim() !== ""  && image !== null && category !== ""){
         let newPhotoId;
         let formData = new FormData()
         formData.append("image",  { uri: image, name: 'image.jpg', type: 'image/jpeg' })
-
-        if (image) {  
+ 
         let createOptions = { 
                         method: 'POST',
                         headers: {
@@ -72,12 +78,17 @@ export default function PhotoUploader() {
         .then(response => response.json())
         .then(resp => { console.log(".../photos", resp), 
                         newPhotoId=resp.photo.id, 
-                        uploadImg(newPhotoId, formData)
+                        uploadImg(newPhotoId, formData),
+                       
+                        navigation.navigate('About')
+
         })
-        }
     }
     else {
-        setError("Make sure you filled out the description filed, celected the image file from your device and celected the category")
+        text.trim() === "" ? setTextError("Fill in a description field!") : setTextError("")
+        // trim() removes whitespace from both sides of a string
+        image === null ? setImageError("Image was not picked!") : setImageError(null)
+        category === "" ? setCategoryError("Category was not selected!") : setCategoryError("")
     }
     }
 
@@ -110,7 +121,7 @@ export default function PhotoUploader() {
                         <AntDesign  name="closesquareo"
                                     size={24}
                                     color="red"
-                                    onPress={()=> setImage(null)} />
+                                    onPress={()=> {setImage(null), setImageError("Image was not picked!")}} />
                     </View>
                 </View>
                 : 
@@ -138,12 +149,15 @@ export default function PhotoUploader() {
                                                 : 
                                                 [styles.category, {backgroundColor: "silver"}]
                                             }   
-                                    onPress={() => setCategory(item.name)} > 
+                                    onPress={() => {setCategory(item.name), setCategoryError("")}} > 
                     <Text>{item.name}</Text>
                 </TouchableOpacity>                        
             }          
         />
-            <Text style={{color:"red"}}>{error}</Text> 
+            {/* <Text style={{color:"red"}}>{error}</Text>  */}
+            <Text style={{color:"red"}}>{textError}</Text> 
+            <Text style={{color:"red"}}>{categoryError}</Text> 
+            <Text style={{color:"red"}}>{imageError}</Text> 
             <View style={styles.button}>
                 <Button title="Submit" onPress={submitHandler} />
                         {/* button can have color prop only, styles dont work with button component, 

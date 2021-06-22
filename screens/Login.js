@@ -46,7 +46,7 @@ export default function Login({navigation}) {
                     AsyncStorage.setItem("JWT", JSON.stringify(resp.jwt)) 
                     AsyncStorage.setItem("currentUser", JSON.stringify(resp.user.username)) 
                     console.log("in login container", username)
-                    navigation.navigate('About', )
+                    navigation.navigate('About')
                     setJWT(resp.jwt)
                     setFailMessage(null)
                     userData.authenticate(username) // invoke loginOrLogout method in app.js which set username state in App.js
