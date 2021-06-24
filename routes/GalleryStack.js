@@ -16,14 +16,12 @@ export default function GalleryStack({ navigation }) {
                     headerTitle: () => <Header navigation={navigation} title="Categories" />,
                     headerStyle: {                   
                         backgroundColor: "silver", //Set Header color
-                        height: 60,
-                        headerTintColor: "Black",  //Set Header text color               
+                        height: 60             
                     }            
                 }}
                     // the value of options is an object
                     // {key - headerTitle, value - the function that returns Header Component}
             /> 
-            {/* {console.log("hhhh", route)} */}
             <Stack.Screen
                 name="Photos"
                 component={Photos}
@@ -32,8 +30,7 @@ export default function GalleryStack({ navigation }) {
                         title: route.params.category.name,    // category is a prop comes from Categories.js onPress 
                         headerStyle: {
                             backgroundColor: "silver", 
-                            height: 60,
-                            headerTintColor: "Black",  
+                            height: 60
                         } 
                     })
                 } /> 

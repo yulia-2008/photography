@@ -5,7 +5,7 @@ import {View, ScrollView, Button, Image, Text, TextInput, FlatList,
 import { AntDesign } from '@expo/vector-icons'; 
 import * as ImagePicker from 'expo-image-picker';
 
-export default function PhotoUploader() {
+export default function PhotoUploader({navigation}) {
 
     const [text, setText] = useState("");
     const [image, setImage] = useState(null);
@@ -78,8 +78,7 @@ export default function PhotoUploader() {
         .then(response => response.json())
         .then(resp => { console.log(".../photos", resp), 
                         newPhotoId=resp.photo.id, 
-                        uploadImg(newPhotoId, formData),
-                       
+                        uploadImg(newPhotoId, formData),                      
                         navigation.navigate('About')
 
         })
@@ -111,8 +110,8 @@ export default function PhotoUploader() {
     return (
         <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()} }>
         <ScrollView style={styles.container}>
-        <View style={styles.button}> 
-            <Button color="grey" title="Pick an image" onPress={selectImage}  />
+            <View style={styles.button}> 
+                <Button color="grey" title="Pick an image" onPress={selectImage}  />
             </View>
             { image ? 
                 <View >
@@ -154,7 +153,6 @@ export default function PhotoUploader() {
                 </TouchableOpacity>                        
             }          
         />
-            {/* <Text style={{color:"red"}}>{error}</Text>  */}
             <Text style={{color:"red"}}>{textError}</Text> 
             <Text style={{color:"red"}}>{categoryError}</Text> 
             <Text style={{color:"red"}}>{imageError}</Text> 

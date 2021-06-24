@@ -22,9 +22,8 @@ export default function App() {
   //  useEffect(() => {getCurrentUser(), [currentUser]})
 
   const getCurrentUser = async () =>  {
-    console.log("useeffect run")
       await AsyncStorage.getItem('currentUser')
-      .then(resp => {console.log("in async", resp), setCurrentUser(resp) })   
+      .then(resp => setCurrentUser(resp) )   
   }
   const Drawer =  createDrawerNavigator();
 

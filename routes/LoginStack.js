@@ -15,8 +15,7 @@ export default function LoginStack({ navigation }) {
                 headerTitle:() => <Header navigation={navigation} title="Login" />,
                 headerStyle: {                   
                     backgroundColor: "silver", //Set Header color
-                    height: 60,
-                    headerTintColor: "Black",  //Set Header text color               
+                    height: 60             
                 }            
             }}
           />

@@ -15,8 +15,7 @@ export default function UploaderStack({ navigation }) {
                     headerTitle:() => <Header navigation={navigation} title="Add Photo" />,
                     headerStyle: {                   
                         backgroundColor: "silver", //Set Header color
-                        height: 60,
-                        headerTintColor: "Black",  //Set Header text color               
+                        height: 60         
                     }            
                 }}
             />

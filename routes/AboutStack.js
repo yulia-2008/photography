@@ -16,8 +16,7 @@ export default function AboutStack({ navigation }) {
                     headerTitle:() => <Header navigation={navigation} title="About the App" />,
                     headerStyle: {                   
                         backgroundColor: "silver", //Set Header color
-                        height: 60,
-                        headerTintColor: "Black",  //Set Header text color               
+                        height: 60            
                     }            
                 }}
             />

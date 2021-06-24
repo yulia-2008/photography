@@ -5,25 +5,42 @@ import {View, Text, Image, FlatList, TouchableOpacity, StyleSheet} from "react-n
 export default function Categories({navigation}) {
     
     const [categories, updateCategories] = useState([
-        {name: "Landscape",  key: 1},
-        {name: "Street Photo", key:2},
-        {name: "Portrait",  key: 3},
-        {name: "Architecture",  key: 4},
-        {name: "Black & White",  key: 5},
-        {name: "Macro",  key: 6}, 
-        {name: "People",  key: 7}
+        {name: "Landscape",  key: 1, photos: []},
+        {name: "Street Photo", key:2, photos: []},
+        {name: "Portrait",  key: 3, photos: []},
+        {name: "Architecture",  key: 4, photos: []},
+        {name: "Black & White",  key: 5, photos: []},
+        {name: "Macro",  key: 6, photos: []}, 
+        {name: "People",  key: 7, photos: []}
     ])
+    useEffect(() => getPhotos(), [])
+
+    const getPhotos = () => {
+        fetch('https://photoap-backend.herokuapp.com/photos')  // got toket in response !
+            .then(response => response.json())
+            .then(resp => handlePhotos(resp))
+    }
+
+    const handlePhotos = (photoArray) => {
+        // locate every photo object received from backend to the appropriate category
+        let categoriesCopy = [...categories]
+        photoArray.map((photoObject) => {           
+            let foundCategory = categoriesCopy.find((categ) => categ.name === photoObject.category )          
+            foundCategory.photos.push(photoObject)         
+        })
+        updateCategories(categoriesCopy)
+        console.log("upd", categories)
+    }
     
         return (
             <View style={styles.container}>
                 <FlatList 
-                    style={{alignSelf: 'center'}}
                     data={categories}
                     numColumns={2}
                     renderItem={({item}) =>
                         <TouchableOpacity   style={styles.category}
                                             onPress={() => navigation.navigate("Photos", {category: item})} >
-                            <Text>{item.name}</Text>
+                            <Text style={{textAlign: 'center'}}>{item.name}</Text>
                             <Image source={require('./1.jpg')} style={styles.image}/>   
                             {/* image should be in the same folder */}
                         </TouchableOpacity>   
@@ -41,17 +58,16 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: 'center'             
     },
-    category: { 
-        borderWidth: 1, 
-        width: 150,                                
-        margin: 10, 
-        height: 100                                                         
+    category: {                                
+        margin: 10,                                      
     },
     image: {
-        width: 150,                                      
-        height: 100
+        width: 170,                                      
+        height: 90,
+        borderWidth: 5,
+        borderRadius: 10, 
+        borderColor: 'silver'  
     }
   });

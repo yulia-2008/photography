@@ -14,8 +14,7 @@ export default function ProfileStack({ navigation }) {
                 headerTitle:() => <Header navigation={navigation} title="Profile" />,
                 headerStyle: {                   
                     backgroundColor: "silver", //Set Header color
-                    height: 60,
-                    headerTintColor: "Black",  //Set Header text color               
+                    height: 60              
                 }            
             }}
           />
