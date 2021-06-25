@@ -4,7 +4,7 @@ import {View, Text, Image, TouchableOpacity, FlatList, StyleSheet} from "react-n
 export default function Photos({route}) {
 
     const category = route.params.category    // category is an object {name: "Landscape",  key: 1, photos: []},
-    // const urlsArray = category.photos.map((photoObject) => photoObject.attached_image.split('?')[0])
+    
     return (
     <View style={styles.container}>
         <FlatList 
@@ -16,7 +16,7 @@ export default function Photos({route}) {
                                     >
                     <Text style={{textAlign: 'center'}}>Like?</Text>
                     <Image source={{uri: item.attached_image}} style={styles.image}/> 
-                    {console.log("lll", item)}  
+                     {console.log("lll", item)}   
                 </TouchableOpacity>   
                 }        
                 />
