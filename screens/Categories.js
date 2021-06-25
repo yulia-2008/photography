@@ -29,7 +29,7 @@ export default function Categories({navigation}) {
             foundCategory.photos.push(photoObject)         
         })
         updateCategories(categoriesCopy)
-        console.log("upd", categories)
+        // console.log("upd", categories)
     }
     
         return (
