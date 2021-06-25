@@ -4,23 +4,22 @@ import {View, Text, Image, TouchableOpacity, FlatList, StyleSheet} from "react-n
 export default function Photos({route}) {
 
     const category = route.params.category    // category is an object {name: "Landscape",  key: 1, photos: []},
-    const urlsArray = category.photos.map((photoObject) => photoObject.attached_image.split('?')[0])
+    // const urlsArray = category.photos.map((photoObject) => photoObject.attached_image.split('?')[0])
     return (
     <View style={styles.container}>
         <FlatList 
-            data={urlsArray}
+            data={category.photos}
             numColumns={2}
-            renderItem={({item}) =>
-                <TouchableOpacity    style={styles.category}
-                                    // onPress={() => navigation.navigate("Photos", {category: item})} 
+            renderItem={({item}) => <TouchableOpacity    style={styles.category}
+                                    // onPress={() => navigation.navigate("PhotoDetails", {photoObj: item})} 
+                                    // need to add one more screen for PhotoDetails
                                     >
                     <Text style={{textAlign: 'center'}}>Like?</Text>
-                    <Image source={{uri: item}} style={styles.image}/>   
+                    <Image source={{uri: item.attached_image}} style={styles.image}/> 
+                    {console.log("lll", item)}  
                 </TouchableOpacity>   
-                    }         
+                }        
                 />
-        {/* <Text>{category.name}</Text> 
-        {console.log("kk", category.photos)  }   */}
     </View>  
     //  In React Navigation 5.x, the navigation prop split into 2 props: navigation, route
     //  No more getParam() method, it's equivalent to: route.params          

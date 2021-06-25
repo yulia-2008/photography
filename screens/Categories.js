@@ -24,9 +24,10 @@ export default function Categories({navigation}) {
     const handlePhotos = (photoArray) => {
         // locate every photo object received from backend to the appropriate category
         let categoriesCopy = [...categories]
-        photoArray.map((photoObject) => {           
+        photoArray.map((photoObject) => { 
+            let imageUrl = photoObject.attached_image.split('?')[0]          
             let foundCategory = categoriesCopy.find((categ) => categ.name === photoObject.category )          
-            foundCategory.photos.push(photoObject)         
+            foundCategory.photos.push(imageUrl)         
         })
         updateCategories(categoriesCopy)
         // console.log("upd", categories)
