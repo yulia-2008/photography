@@ -1,16 +1,13 @@
 import React, {useState, useContext} from 'react';
 import {View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
-import {UserContext}  from '../App.js'
+import userContext  from '../components/UserContext.js'
 
 export default function Login({navigation}) {
-    const userData = useContext(UserContext);
-        // UserContext comes from App.js,
+    const userData = useContext(userContext);
         // It's an object {user: null, authenticate: () => {}}
         // In App.js  return() Provider gives a value to this object
         // value={{user: currentUser, authenticate: loginOrLogout }}
-        // I use userData.authenticate in loginHandler after username is set to AsyncStorage
-        // It's invoke loginOrLogout method in app.js which set username state in App.js
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
@@ -37,7 +34,7 @@ export default function Login({navigation}) {
 
                 // Android emulator and Rails server have different IP
                 // => Errors on Fetch to backend ("Network request failed")
-                // I changed IP for rails server (in backend: config/puma.rb) for the same as Emulator has, error is gone!
+                // I changed IP of rails server (in backend: config/puma.rb) for the same as Emulator has, error is gone!
      
             fetch('https://photoap-backend.herokuapp.com/login', options)  // got toket in response !
             .then(response => response.json())
@@ -49,7 +46,7 @@ export default function Login({navigation}) {
                     navigation.navigate('About')
                     setJWT(resp.jwt)
                     setFailMessage(null)
-                    userData.authenticate(username) // invoke loginOrLogout method in app.js which set username state in App.js
+                    userData.authenticate(username) // invoke loginOrLogout method in App.js which set currentUser.
                 }
                 else {
                     setFailMessage(resp.message)

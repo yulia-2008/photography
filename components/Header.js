@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet} from "react-native";
 import {MaterialIcons} from '@expo/vector-icons';
-import {UserContext}  from '../App.js'
+import userContext  from './UserContext.js'
 
 export default function Header({navigation, title}) {
         
@@ -9,7 +9,7 @@ export default function Header({navigation, title}) {
         // Header component takes props "navigation" from StackNavigation.js
         // openDrawer is a built in function.
 
-    const userData = useContext(UserContext);
+    const userData = useContext(userContext);
         // UserContext comes from App.js,
         // It's an object {user: null, authenticate: () => {}}
         // In App.js  return() Provider gives a value to this object

@@ -9,7 +9,6 @@ export default function PhotoDetails({route}) {
     <View style={styles.container}>
         <Image style={styles.image} source={{uri: photoObject.attached_image}} /> 
         <Text style={{textAlign: 'center'}}>Like?</Text>
-        <Text style={{textAlign: 'center'}}>Category: {photoObject.category}</Text>
         <Text style={{textAlign: 'center'}}>Descriprion: {photoObject.description}</Text>   
     </View>  
     //  In React Navigation 5.x, the navigation prop split into 2 props: navigation, route

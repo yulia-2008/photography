@@ -16,7 +16,7 @@ export default function GalleryStack({ navigation }) {
                 options={{
                     headerTitle: () => <Header navigation={navigation} title="Categories" />,
                     headerStyle: {                   
-                        backgroundColor: "silver", //Set Header color
+                        backgroundColor: "silver", // Set Header color
                         height: 60             
                     }            
                 }}

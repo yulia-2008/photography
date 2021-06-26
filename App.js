@@ -7,12 +7,8 @@ import AboutStack from './routes/AboutStack.js';
 import UploaderStack from './routes/UploaderStack.js';
 import LoginStack from './routes/LoginStack.js';
 import ProfileStack from './routes/ProfileStack.js';
-import AsyncStorage from '@react-native-community/async-storage'
-
-
-export const UserContext = React.createContext({user: null, authenticate: () => {} });
-// It returns an object with 2 values: { Provider, Consumer }
-// I use Provider in return() 
+import AsyncStorage from '@react-native-community/async-storage';
+import userContext from './components/UserContext.js';
 
 
 export default function App() {
@@ -34,7 +30,7 @@ export default function App() {
   return (
     <>
       <StatusBar barStyle="light-content" />
-      <UserContext.Provider value={{user: currentUser, authenticate: loginOrLogout }}>
+      <userContext.Provider value={{user: currentUser, authenticate: loginOrLogout }}>
           {/* Provider is passing a value to UserContext object for using it in Navigator (in login and Profile container) */}
       
         <NavigationContainer>         
@@ -52,7 +48,7 @@ export default function App() {
               }              
           </Drawer.Navigator>
         </NavigationContainer>
-      </UserContext.Provider>
+      </userContext.Provider>
       </>
   );
 }

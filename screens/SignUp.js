@@ -1,19 +1,17 @@
 import React, {useState, useContext} from 'react';
 import {View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, StyleSheet} from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
-import {UserContext}  from '../App.js'
+import userContext  from '../components/UserContext.js'
 
 export default function SignUp({navigation}) {
-    const userData = useContext(UserContext);
-        // UserContext comes from App.js,
+    const userData = useContext(userContext);
         // It's an object {user: null, authenticate: () => {}}
-        // In App.js  return() Provider gives a value to this object
+        // In App.js return() Provider gives a value to this object
         // value={{user: currentUser, authenticate: loginOrLogout }}
-        // I use userData.authenticate in loginHandler after username is set to AsyncStorage
-        // It's invoke loginOrLogout method in app.js which set username state in App.js
 
-    // if variables would be set to null, it does not go back to null after a user erase the entered data,
-    // after erasing it will be the empty string "" , so it will pass the validation with no data.
+
+       // if variables would be set to null, it does not go back to null after a user erase the entered data,
+       // after erasing it will be the empty string "" , so it will pass the validation with no data.
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState(""); 
     const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -23,7 +21,6 @@ export default function SignUp({navigation}) {
     const [cityError, setCityError] = useState(null);
     const [usernameError, setUsernameError] = useState(null);
     const [jwt, setJWT] = useState(null);
-    // const [currentUser, setcurrentUser] = useState(null);
     const [failMessage, setFailMessage] = useState(null);
 
     const submitHandler = () => {
@@ -76,7 +73,8 @@ export default function SignUp({navigation}) {
                 // setCurrentUser(resp.user.username)
 
                 setFailMessage(null)
-                userData.authenticate(username) // invoke loginOrLogout method in app.js which set username state in App.js
+                userData.authenticate(username) 
+                  // invoke loginOrLogout method in App.js which set currentUser.
             }
             else {
                 setFailMessage("Failed to create an account")
