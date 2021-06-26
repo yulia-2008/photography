@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import About from '../screens/About.js';
-import Header from '../Header.js';
+import Header from '../components/Header.js';
 
 
 export default function AboutStack({ navigation }) {

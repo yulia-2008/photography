@@ -3,7 +3,7 @@ import {View, Text, Image, TouchableOpacity, StyleSheet} from "react-native";
 
 export default function PhotoDetails({route}) {
 
-    const photoObject = route.params.photoObj    // category is an object {name: "Landscape",  key: 1, photos: []},
+    const photoObject = route.params.photoObj  
     
     return (
     <View style={styles.container}>

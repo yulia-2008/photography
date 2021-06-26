@@ -1,7 +1,8 @@
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Profile from '../screens/Profile.js';
-import Header from '../Header.js';
-import React from 'react';
+import Header from '../components/Header.js';
+
 
 export default function ProfileStack({ navigation }) {
     const Stack = createStackNavigator();

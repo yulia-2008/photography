@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Categories from "../screens/Categories.js";
-import Photos from "../screens/Photos.js";
-import PhotoDetails from "../screens/PhotoDetails.js";
-import Header from '../Header.js';
+import Categories from '../screens/Categories.js';
+import Photos from '../screens/Photos.js';
+import PhotoDetails from '../screens/PhotoDetails.js';
+import Header from '../components/Header.js';
 
 export default function GalleryStack({ navigation }) {
     const Stack = createStackNavigator();

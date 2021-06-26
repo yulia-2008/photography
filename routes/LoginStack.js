@@ -1,8 +1,9 @@
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../screens/Login.js';
 import SignUp from '../screens/SignUp.js';
-import Header from '../Header.js';
-import React from 'react';
+import Header from '../components/Header.js';
+
 
 export default function LoginStack({ navigation }) {
     const Stack = createStackNavigator();
