@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Categories from "../screens/Categories.js";
 import Photos from "../screens/Photos.js";
+import PhotoDetails from "../screens/PhotoDetails.js";
 import Header from '../Header.js';
 
 export default function GalleryStack({ navigation }) {
@@ -34,6 +35,20 @@ export default function GalleryStack({ navigation }) {
                         } 
                     })
                 } /> 
+            <Stack.Screen
+                name="PhotoDetails"
+                component={PhotoDetails}
+                options={ 
+                    ({route}) =>({ 
+                        title: `Back to ${route.params.photoObj.category} category`,  // photoObj prop comes from Photos.js onPress 
+                         
+                        headerStyle: {
+                            backgroundColor: "silver", 
+                            height: 60
+                        } 
+                    })
+                } /> 
+
 {/* In React Navigation 5.x, the navigation prop split into 2 props: navigation, route
 No more getParam() method, it's equivalent to: route.params      */}
            

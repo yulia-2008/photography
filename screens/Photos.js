@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, FlatList, StyleSheet} from "react-native";
 
-export default function Photos({route}) {
+export default function Photos({navigation, route}) {
 
     const category = route.params.category    // category is an object {name: "Landscape",  key: 1, photos: []},
     
@@ -11,12 +11,11 @@ export default function Photos({route}) {
             data={category.photos}
             numColumns={2}
             renderItem={({item}) => <TouchableOpacity    style={styles.category}
-                                    // onPress={() => navigation.navigate("PhotoDetails", {photoObj: item})} 
+                                    onPress={() => navigation.navigate("PhotoDetails", {photoObj: item})} 
                                     // need to add one more screen for PhotoDetails
                                     >
                     <Text style={{textAlign: 'center'}}>Like?</Text>
                     <Image source={{uri: item.attached_image}} style={styles.image}/> 
-                     {console.log("lll", item)}   
                 </TouchableOpacity>   
                 }        
                 />
