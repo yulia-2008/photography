@@ -10,10 +10,13 @@ export default function Photos({navigation, route}) {
         <FlatList 
             data={category.photos}
             numColumns={2}
-            renderItem={({item}) => <TouchableOpacity    style={styles.category}
-                                    onPress={() => navigation.navigate("PhotoDetails", {photoObj: item})} 
-                                    // need to add one more screen for PhotoDetails
-                                    >
+            renderItem={({item}) => <TouchableOpacity  
+                                        style={styles.category}
+                                        onPress={() => navigation.navigate("PhotoDetails", {
+                                            photos: category.photos,
+                                            photoObj: item 
+                                            }) 
+                                        } >                                 
                     <Text style={{textAlign: 'center'}}>Like?</Text>
                     <Image source={{uri: item.attached_image}} style={styles.image}/> 
                 </TouchableOpacity>   

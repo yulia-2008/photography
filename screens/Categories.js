@@ -22,7 +22,7 @@ export default function Categories({navigation}) {
     }
 
     const handlePhotos = (photoArray) => {
-        // method locate every photo object received from backend to the appropriate category
+        // method send every photo object received from backend to the appropriate category
 
         let categoriesCopy = [...categories]
 
@@ -33,7 +33,6 @@ export default function Categories({navigation}) {
             foundCategory.photos.push(newObj)                   
         })
         updateCategories(categoriesCopy)
-        console.log("jj", categories)
     }
     
         return (
