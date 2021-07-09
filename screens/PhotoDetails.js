@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {View, Text, Image, FlatList, TouchableOpacity, StyleSheet} from "react-native";
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+// import Swiper from 'react-native-swipe-image';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 
 export default function PhotoDetails({route}) {
 
@@ -17,23 +19,48 @@ export default function PhotoDetails({route}) {
         // console.log('Swipe from left');
         setCurrentPhoto(photos[0]) 
       }
+
+      const onSwipeUp = (statee) => {
+       console.log("UP", statee)
+      }
+     
+      const onSwipeDown = () => {
+        console.log("down")
+      }
+     
+      const onSwipeLeft = () => {
+       console.log("left")
+      }
+     
+      const onSwipeRight = () =>  {
+        console.log("right")
+      }
     
     return (
-        <Swipeable  
-                    renderLeftActions={ leftAction}
-                    renderRightActions={ rightAction }
-                    onSwipeableRightOpen={()=> console.log("right")  }
-                    onSwipeableLeftOpen={()=> console.log("left") }
-  >
+            <View style={styles.container}> 
+                <GestureRecognizer
+         onSwipe={console.log("onswipe")}
+        onSwipeUp={(state)=>console.log(state)}
+        onSwipeDown={()=> console.log("down)")}
+        onSwipeLeft={() => onSwipeLeft}
+        onSwipeRight={() => onSwipeRight}
+        config={{
+            velocityThreshold: 0.3,
+            directionalOffsetThreshold: 80,
+          }}
+        style={{
+          flex: 1
+        }}
+        ></GestureRecognizer>
 
-            {/* <View style={styles.container}> */}
+
+
                 {/* <Image style={styles.image} source={{uri: photoObject.attached_image}} />  */}
                 <Image style={styles.image} source={{uri: currentPhoto.attached_image}} /> 
                 <Text style={{textAlign: 'center'}}>Like?</Text>
-                <Text style={{textAlign: 'center'}}>Descriprion: {currentPhoto.description}</Text>   
-            {/* </View>   */}
-            {/* {console.log("kk", photos[1])} */}
-    </Swipeable> 
+                <Text style={{textAlign: 'center'}}>Descriprion: {currentPhoto.description}</Text>  
+             </View>  
+   
     //  In React Navigation 5.x, the navigation prop split into 2 props: navigation, route
     //  No more getParam() method, it's equivalent to: route.params          
     );
