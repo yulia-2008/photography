@@ -28,7 +28,8 @@ export default function GalleryStack({ navigation }) {
                 component={Photos}
                 options={ 
                     ({route}) =>({ 
-                        title: route.params.category.name,    // category is a prop comes from Categories.js onPress 
+                        title: route.params.category.name,  
+                          // category is a prop comes from Categories.js onPress 
                         headerStyle: {
                             backgroundColor: "silver", 
                             height: 60
@@ -40,8 +41,8 @@ export default function GalleryStack({ navigation }) {
                 component={PhotoDetails}
                 options={ 
                     ({route}) =>({ 
-                        title: `Back to ${route.params.photoObj.category} category`,  // photoObj prop comes from Photos.js onPress 
-                         
+                        title: `Back to ${route.params.photoObj.category} category`,
+                          // photoObj prop comes from Photos.js onPress     
                         headerStyle: {
                             backgroundColor: "silver", 
                             height: 60
