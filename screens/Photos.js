@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, FlatList, StyleSheet} from "react-native";
+import { AntDesign } from '@expo/vector-icons'; 
 
 export default function Photos({navigation, route}) {
 
@@ -11,14 +12,16 @@ export default function Photos({navigation, route}) {
             data={category.photos}
             numColumns={2}
             renderItem={({item}) => <TouchableOpacity  
-                                        style={styles.category}
+                                        style={styles.card}
                                         onPress={() => navigation.navigate("PhotoDetails", {
                                             photos: category.photos,
                                             photoObj: item 
                                             }) 
-                                        } >                                 
-                    <Text style={{textAlign: 'center'}}>Like?</Text>
-                    <Image source={{uri: item.attached_image}} style={styles.image}/> 
+                                        } >                                                   
+                    <Image source={{uri: item.attached_image}} style={styles.image}/>
+                    <View style={styles.icon}>
+                        <AntDesign name="like2" size={24} color="black" />
+                    </View> 
                 </TouchableOpacity>   
                 }        
                 />
@@ -34,15 +37,27 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center'             
     },
-    category: {                                
-        margin: 10,                                      
+    card: {                                
+        margin: 10,
+        borderWidth: 5,
+        borderRadius: 10, 
+        borderColor: 'silver',
+        position: "relative",
+        left: 0,
+        top: 0,                                      
     },
     image: {
         width: 170,                                      
         height: 90,
-        borderWidth: 5,
-        borderRadius: 10, 
-        borderColor: 'silver'  
+        position: "relative",
+        top: 0,
+        left: 0,
+         
+    },
+    icon: {
+        position: "absolute",
+        top: "70%",
+        left: "2%",
     }
   });
 

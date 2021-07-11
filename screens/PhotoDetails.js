@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, Image, FlatList, TouchableOpacity, StyleSheet} from "react-native";
 import { Dimensions } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
 
 
 
@@ -36,21 +37,25 @@ export default function PhotoDetails({route}) {
    
     
     return (
-        <View   onTouchStart={e=> touchX = e.nativeEvent.pageX }
-                onTouchEnd={e => {
-                    if (touchX - e.nativeEvent.pageX > 10){
-                        swipeLeft()
-                        }
-                    else if (touchX - e.nativeEvent.pageX < -10) {
-                        swipeRight()
-                        }
-                }} >
-            <Image style={styles.image} source={{uri: currentPhoto.attached_image}} /> 
-            <Text style={{textAlign: 'center'}}>Like?</Text>
-            <Text style={{textAlign: 'center'}}>Descriprion: {currentPhoto.description}</Text>   
-        </View>  
-    //  In React Navigation 5.x, the navigation prop split into 2 props: navigation, route
-    //  No more getParam() method, it's equivalent to: route.params          
+        <View>
+            <View   onTouchStart={e=> touchX = e.nativeEvent.pageX }
+                    onTouchEnd={e => {
+                        if (touchX - e.nativeEvent.pageX > 10){
+                            swipeLeft()
+                            }
+                        else if (touchX - e.nativeEvent.pageX < -10) {
+                            swipeRight()
+                            }
+                    }} 
+                    style = {styles.card}
+                    >
+                <Image style={styles.image} source={{uri: currentPhoto.attached_image}} /> 
+                <View style={styles.icon}>
+                    <AntDesign name="like2" size={30} color="black" />
+                </View>   
+            </View>    
+            <Text style={{textAlign: 'center'}}>Descriprion: {currentPhoto.description}</Text> 
+    </View>       
     );
 }
 
@@ -60,11 +65,21 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center'             
     },
+    card: {
+        position: "relative",
+        left: 0,
+        top: 0,  
+    },
     image: {
         width: Dimensions.get('window').width,                                      
         height: 500,
-        // borderWidth: 5,
-        // borderRadius: 10, 
-        // borderColor: 'silver'  
+        position: "relative",
+        top: 0,
+        left: 0,  
+    },
+    icon: {
+        position: "absolute",
+        top: "90%",
+        left: "3%",
     }
   });
