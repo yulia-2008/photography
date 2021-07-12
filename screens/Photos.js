@@ -5,9 +5,12 @@ import { AntDesign } from '@expo/vector-icons';
 export default function Photos({navigation, route}) {
 
     const category = route.params.category    // category is an object {name: "Landscape",  key: 1, photos: []},
-    
+    // category.photos.sort((a, b) => {
+    //     return b.id - a.id;  // it is done in parent component - Categories
+    // });
+   
     return (
-    <View style={styles.container}>
+    <View style={styles.container}> 
         <FlatList 
             data={category.photos}
             numColumns={2}

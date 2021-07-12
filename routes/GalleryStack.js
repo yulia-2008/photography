@@ -28,14 +28,24 @@ export default function GalleryStack({ navigation }) {
                 component={Photos}
                 options={ 
                     ({route}) =>({ 
-                        title: route.params.category.name,  
+                        title: route.params.category.name,
                           // category is a prop comes from Categories.js onPress 
                         headerStyle: {
                             backgroundColor: "silver", 
-                            height: 60
+                            height: 60,
+                            textAlign:"center", 
+                            flex:1,
+                        },
+                        headerTitleStyle: { 
+                            left: "25%",
+                            // alignSelf: 'center',
+                            //  works too, but located not in center (because of arrow)
+                            
                         } 
                     })
-                } /> 
+                }
+                    
+                 /> 
             <Stack.Screen
                 name="PhotoDetails"
                 component={PhotoDetails}

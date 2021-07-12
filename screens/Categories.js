@@ -25,14 +25,20 @@ export default function Categories({navigation}) {
         // method send every photo object received from backend to the appropriate category
 
         let categoriesCopy = [...categories]
-
         photoArray.map((photoObject) => { 
             let newObj = Object.assign({}, photoObject, {"attached_image": photoObject.attached_image.split('?')[0] }) 
               // "attached_image" string need to be modified, I will fix it later on backend 
             let foundCategory = categoriesCopy.find((categ) => categ.name === photoObject.category )          
-            foundCategory.photos.push(newObj)                   
+            foundCategory.photos.unshift(newObj)                   
         })
         updateCategories(categoriesCopy)
+    }
+
+    const newestPhoto = (photosArray) => {
+        photosArray.sort((a, b) => {
+            return b.id - a.id;     // new photos goes to the start, old ones to the end
+        })
+        return {uri: photosArray[0].attached_image}
     }
     
         return (
@@ -44,7 +50,11 @@ export default function Categories({navigation}) {
                         <TouchableOpacity   style={styles.category}
                                             onPress={() => navigation.navigate("Photos", {category: item})} >
                             <Text style={{textAlign: 'center'}}>{item.name}</Text>
-                            <Image source={require('./1.jpg')} style={styles.image}/>   
+                            <Image source = { item.photos.length === 0 ? 
+                                require('./1.jpg')
+                                :
+                                newestPhoto(item.photos)} style={styles.image} />
+                            {/* <Image source={require('./1.jpg')} style={styles.image}/>    */}
                             {/* image should be in the same folder */}
                         </TouchableOpacity>   
                     }         
