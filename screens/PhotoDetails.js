@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Image, FlatList, TouchableOpacity, StyleSheet} from "react-native";
+import {View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet} from "react-native";
 import { Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
@@ -37,7 +37,7 @@ export default function PhotoDetails({route}) {
    
     
     return (
-        <View>
+        <ScrollView>
             <View   onTouchStart={e=> touchX = e.nativeEvent.pageX }
                     onTouchEnd={e => {
                         if (touchX - e.nativeEvent.pageX > 10){
@@ -47,15 +47,16 @@ export default function PhotoDetails({route}) {
                             swipeRight()
                             }
                     }} 
-                    style = {styles.card}
+                    
                     >
-                <Image style={styles.image} source={{uri: currentPhoto.attached_image}} /> 
-                <View style={styles.icon}>
-                    <AntDesign name="like2" size={30} color="black" />
-                </View>   
-            </View>    
-            <Text style={{textAlign: 'center'}}>Descriprion: {currentPhoto.description}</Text> 
-    </View>       
+                <Image style={styles.image} source={{uri: currentPhoto.attached_image}} />    
+            </View> 
+            <View style={styles.description}>
+                <Text style={{fontWeight: "bold", fontSize: 20}}>Descriprion</Text> 
+                <AntDesign name="like2" size={30} color="black" />
+            </View>
+            <Text style={{left: "4%"}}>{currentPhoto.description}</Text>
+    </ScrollView>       
     );
 }
 
@@ -65,21 +66,13 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center'             
     },
-    card: {
-        position: "relative",
-        left: 0,
-        top: 0,  
-    },
     image: {
         width: Dimensions.get('window').width,                                      
-        height: 500,
-        position: "relative",
-        top: 0,
-        left: 0,  
+        height: 500,  
     },
-    icon: {
-        position: "absolute",
-        top: "90%",
-        left: "3%",
+    description: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        margin: "4%",
     }
   });

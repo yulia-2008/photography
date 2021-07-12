@@ -41,10 +41,7 @@ const styles = StyleSheet.create({
         margin: 10,
         borderWidth: 5,
         borderRadius: 10, 
-        borderColor: 'silver',
-        position: "relative",
-        left: 0,
-        top: 0,                                      
+        borderColor: 'silver',                                     
     },
     image: {
         width: 170,                                      
@@ -57,7 +54,7 @@ const styles = StyleSheet.create({
     icon: {
         position: "absolute",
         top: "70%",
-        left: "2%",
+        right: "2%",
     }
   });
 
